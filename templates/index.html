@@ -2,30 +2,36 @@
 <body>
 <h1>Market Watchlist</h1>
 
+{% for industry in data %}
 <table border="1" class="dataframe">
-{% for item in fmcg %}
     <thead>
 	<tr>
 	<th>stock</th>
 	<th>Market Cap</th>
 	<th>Current Price</th>
+	<th>Dividend Yield</th>
 	<th>Price to Earnings (8yr, 5yr, 3yr)</th>
 	<th>From 52w high</th>
 	<th>From 52w low</th>
 	</tr>
     </thead>
+{% for item in industry %}
     <tbody>
         <tr>
 	<td align="left">{{item.scrip}}</td>
 	<td align="center">{{item.market_cap}}</td>
 	<td align="center">{{item.current_price}}</td>
-	<td align="center">{{item.price_to_earnings}} ({{item.price_to_earnings_8}}, {{item.price_to_earnings_5}}, {{item.price_to_earnings_3}})</td>
+	<td align="center">{{item.dividend}}</td>
+	<td align="center">{{item.price_to_earnings}}   ({{item.price_to_earnings_8}}, {{item.price_to_earnings_5}}, {{item.price_to_earnings_3}})</td>
 	<td align="center">-{{item.from_year_high}}%</td>
 	<td align="center">+{{item.from_year_low}}%</td>
         </tr>
     </tbody>
 {% endfor %}
 </table>
+</br>
+</br>
+{% endfor %}
 
 </body>
 </html>
