@@ -11,7 +11,8 @@ app = Flask(__name__)
 configs = [
           'consumer_durables.json',
           'auto_4w.json',
-          'auto_2w.json'
+          'auto_2w.json',
+          'niche.json'
           ]
 data = []
 
@@ -23,20 +24,15 @@ def extract_label_val(label):
 
 
 def find_drop(current_price, year_high, year_low):
-    from_year_high = 0
-    from_year_low = 0
+    from_year_high = from_year_low = 0
+
     diff_from_year_high = year_high - current_price
     diff_from_year_low = current_price - year_low
+    from_year_high = round(diff_from_year_high * 100 / year_high)
+    from_year_low = round(diff_from_year_low * 100 / year_low)
 
-    if diff_from_year_high <= 0:
-        from_year_high =  '52w HIGH'
-    else:
-        from_year_high = round(diff_from_year_high * 100 / year_high)
-
-    if diff_from_year_low <= 0:
-        from_year_low =  '52w LOW'
-    else:
-        from_year_low = round(diff_from_year_low * 100 / year_low)
+    from_year_high = '52w HIGH' if from_year_high <= 2 else '-'+str(from_year_high)+'%'
+    from_year_low = '52w LOW' if from_year_low <= 2 else '+'+str(from_year_low)+'%'
 
     return from_year_high, from_year_low
 
