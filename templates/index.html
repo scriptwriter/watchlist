@@ -4,16 +4,26 @@
 
 <table border="1" class="dataframe">
 {% for item in fmcg %}
-<thead><tr><th>stock</th><th>Market Cap</th><th>Price to Earnings</th><th>Price to Sales</th><th>PEG</th></tr></thead>
-<tbody>
-<tr>
+    <thead>
+	<tr>
+	<th>stock</th>
+	<th>Market Cap</th>
+	<th>Current Price</th>
+	<th>Price to Earnings (8yr, 5yr, 3yr)</th>
+	<th>From 52w high</th>
+	<th>From 52w low</th>
+	</tr>
+    </thead>
+    <tbody>
+        <tr>
 	<td align="left">{{item.scrip}}</td>
 	<td align="center">{{item.market_cap}}</td>
-	<td align="center">{{item.price_to_earnings}}</td>
-	<td align="center">{{item.price_to_sales}}</td>
-	<td align="center">{{item.peg}}</td>
-</tr>
-</tbody>
+	<td align="center">{{item.current_price}}</td>
+	<td align="center">{{item.price_to_earnings}} ({{item.price_to_earnings_8}}, {{item.price_to_earnings_5}}, {{item.price_to_earnings_3}})</td>
+	<td align="center">-{{item.from_year_high}}%</td>
+	<td align="center">+{{item.from_year_low}}%</td>
+        </tr>
+    </tbody>
 {% endfor %}
 </table>
 
