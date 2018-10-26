@@ -88,6 +88,8 @@ for config in configs:
         price_to_earnings_3=extract_label_val('lblPEAvg3')
         dividend=extract_label_val('lblDivYeild')
         qtr_sales_growth, qtr_profit_growth = extract_qtr_numbers(soup)
+        promoter=soup.findAll("div", {"class": "float-lt com-mid-share-tab2"})[0].contents[1].contents[1].get_text().strip()
+        debt=soup.findAll("div", {"class": "in-tab-col bg-white"})[-1].contents[3].contents[1].contents[0].strip()
 
         an_item = dict(scrip=scrip,
                        market_cap=market_cap,
@@ -100,7 +102,9 @@ for config in configs:
                        price_to_earnings_3=price_to_earnings_3,
                        dividend=dividend,
                        qtr_sales_growth=qtr_sales_growth,
-                       qtr_profit_growth=qtr_profit_growth
+                       qtr_profit_growth=qtr_profit_growth,
+                       promoter=promoter,
+                       debt=debt
                        )
         industry.append(an_item)
     data.append(industry)

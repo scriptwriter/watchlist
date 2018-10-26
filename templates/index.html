@@ -8,13 +8,15 @@
 	<tr>
 	<th>stock</th>
 	<th>Market Cap</th>
-	<th>Current Price</th>
-	<th>Dividend Yield</th>
+	<th>Cur Price</th>
+	<th>Debt</th>
+	<th>Div Yield</th>
+	<th>Promoter</th>
 	<th>P/E (8yr, 5yr, 3yr)</th>
 	<th>YoY Sales growth (-q1,-q2,-q3,-q4)</th>
 	<th>YoY Profit growth (-q1,-q2,-q3,-q4)</th>
-	<th>From 52w high</th>
-	<th>From 52w low</th>
+	<th>-52w high</th>
+	<th>+52w low</th>
 	</tr>
     </thead>
 {% for item in industry %}
@@ -23,7 +25,9 @@
 	<td align="left">{{item.scrip}}</td>
 	<td align="center">{{item.market_cap}}</td>
 	<td align="center">{{item.current_price}}</td>
+	<td align="center">{{item.debt}}</td>
 	<td align="center">{{item.dividend}}</td>
+	<td align="center">{{item.promoter}}</td>
 	<td align="center">{{item.price_to_earnings}}   ({{item.price_to_earnings_8}}, {{item.price_to_earnings_5}}, {{item.price_to_earnings_3}})</td>
 	<td align="center">{{item.qtr_sales_growth}}</td>
 	<td align="center">{{item.qtr_profit_growth}}</td>
