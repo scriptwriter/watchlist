@@ -10,6 +10,7 @@ app = Flask(__name__)
 
 configs = [
           'consumer_durables.json',
+          'fmcg.json',
           'auto_4w.json',
           'auto_2w.json',
           'niche.json'
@@ -18,9 +19,15 @@ data = []
 
 def extract_label_val(label):
     if label=='lblDivYeild':
-        return soup.find("span", {"id":label}).contents[0]
+        try:
+            return soup.find("span", {"id":label}).contents[0]
+        except:
+            return '-'
     else:
-        return round(float(soup.find("span", {"id":label}).contents[0].strip().replace(',', '')))
+        try:
+            return round(float(soup.find("span", {"id":label}).contents[0].strip().replace(',', '')))
+        except:
+            return '-'
 
 
 def find_drop(current_price, year_high, year_low):
@@ -49,6 +56,7 @@ for config in configs:
 
     industry = []
     for scrip, url in url_mappings.items():
+        print(scrip)
         resp = requests.get(url)
         soup = BeautifulSoup(resp.text, 'lxml')
 
