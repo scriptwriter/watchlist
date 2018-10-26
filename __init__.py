@@ -50,13 +50,19 @@ def load_url_mappings(filename):
     return json.loads(open(filename).read())
 
 
-def extract_qtr_numbers(soup):
+def extract_qtr_numbers(soup, result_type='tblQtyCons'):
     qtr_sales_growth = []
     qtr_profit_growth = []
     for i in SALES_NUMBERS_POS:
-        qtr_sales_growth.append(soup.find("table", {"id": "tblQtyCons"}).find_all("div",{"class":"float-lt in-tab-col2-2"})[i].contents[0].strip())
+        qtr_sales_growth.append(soup.find("table", {"id": result_type}).find_all("div",{"class":"float-lt in-tab-col2-2"})[i].contents[0].strip())
     for j in PROFIT_NUMBERS_POS:
-        qtr_profit_growth.append(soup.find("table", {"id": "tblQtyCons"}).find_all("div",{"class":"float-lt in-tab-col2-2"})[j].contents[0].strip())
+        qtr_profit_growth.append(soup.find("table", {"id": result_type}).find_all("div",{"class":"float-lt in-tab-col2-2"})[j].contents[0].strip())
+
+    if len(set(qtr_sales_growth)) == 1:
+        # return is used to break out of the recursion.
+        # else the main function returns twice - onec from inside and then outside
+        return extract_qtr_numbers(soup, 'tblQtyStd')
+
     return tuple(qtr_sales_growth), tuple(qtr_profit_growth)
 
 #*************************  MAIN  ************************  #
