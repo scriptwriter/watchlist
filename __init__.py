@@ -11,13 +11,21 @@ app = Flask(__name__)
 configs = [
           'consumer_durables.json',
           'fmcg.json',
+          'fastfood.json',
           'auto_4w.json',
           'auto_2w.json',
+          'auto_ancilary.json',
+          'tyres.json',
+          'products.json',
+          'utilities.json',
+          'chemicals.json',
+          'midcaps.json',
           'niche.json'
           ]
 data = []
 SALES_NUMBERS_POS = (14,17,20,23)
 PROFIT_NUMBERS_POS = (122,125,128,131)
+count=0
 
 def extract_label_val(label):
     if label=='lblDivYeild':
@@ -72,7 +80,8 @@ for config in configs:
 
     industry = []
     for scrip, url in url_mappings.items():
-        #print(scrip)
+        count+=1
+        print(scrip)
         resp = requests.get(url)
         soup = BeautifulSoup(resp.text, 'lxml')
 
@@ -113,4 +122,4 @@ for config in configs:
 @app.route('/')
 def hello():
     #return render_template('index.html', fmcg=fmcg)
-    return render_template('index.html', data=data)
+    return render_template('index.html', data=data, count=count)
