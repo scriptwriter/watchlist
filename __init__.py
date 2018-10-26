@@ -16,6 +16,8 @@ configs = [
           'niche.json'
           ]
 data = []
+SALES_NUMBERS_POS = (14,17,20,23)
+PROFIT_NUMBERS_POS = (122,125,128,131)
 
 def extract_label_val(label):
     if label=='lblDivYeild':
@@ -48,6 +50,14 @@ def load_url_mappings(filename):
     return json.loads(open(filename).read())
 
 
+def extract_qtr_numbers(soup):
+    qtr_sales_growth = []
+    qtr_profit_growth = []
+    for i in SALES_NUMBERS_POS:
+        qtr_sales_growth.append(soup.find("table", {"id": "tblQtyCons"}).find_all("div",{"class":"float-lt in-tab-col2-2"})[i].contents[0].strip())
+    for j in PROFIT_NUMBERS_POS:
+        qtr_profit_growth.append(soup.find("table", {"id": "tblQtyCons"}).find_all("div",{"class":"float-lt in-tab-col2-2"})[j].contents[0].strip())
+    return tuple(qtr_sales_growth), tuple(qtr_profit_growth)
 
 #*************************  MAIN  ************************  #
 
@@ -56,7 +66,7 @@ for config in configs:
 
     industry = []
     for scrip, url in url_mappings.items():
-        print(scrip)
+        #print(scrip)
         resp = requests.get(url)
         soup = BeautifulSoup(resp.text, 'lxml')
 
@@ -71,6 +81,7 @@ for config in configs:
         price_to_earnings_5=extract_label_val('lblPEAvg5')
         price_to_earnings_3=extract_label_val('lblPEAvg3')
         dividend=extract_label_val('lblDivYeild')
+        qtr_sales_growth, qtr_profit_growth = extract_qtr_numbers(soup)
 
         an_item = dict(scrip=scrip,
                        market_cap=market_cap,
@@ -81,7 +92,9 @@ for config in configs:
                        price_to_earnings_8=price_to_earnings_8,
                        price_to_earnings_5=price_to_earnings_5,
                        price_to_earnings_3=price_to_earnings_3,
-                       dividend=dividend
+                       dividend=dividend,
+                       qtr_sales_growth=qtr_sales_growth,
+                       qtr_profit_growth=qtr_profit_growth
                        )
         industry.append(an_item)
     data.append(industry)
