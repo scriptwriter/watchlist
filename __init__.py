@@ -7,16 +7,16 @@ from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 
-
 configs = [
           'consumer_durables.json',
           'fmcg.json',
           'fastfood.json',
+          'electronics.json',
           'auto_4w.json',
           'auto_2w.json',
           'auto_ancilary.json',
           'tyres.json',
-          'products.json',
+          'building_materials.json',
           'utilities.json',
           'chemicals.json',
           'midcaps.json',
