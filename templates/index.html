@@ -28,11 +28,23 @@
 	<td align="center">{{item.debt}}</td>
 	<td align="center">{{item.dividend}}</td>
 	<td align="center">{{item.promoter}}</td>
-	<td align="center">{{item.price_to_earnings}}   ({{item.price_to_earnings_8}}, {{item.price_to_earnings_5}}, {{item.price_to_earnings_3}})</td>
+	{% if item.price_to_earnings_8|int and item.price_to_earnings_5|int and item.price_to_earnings_3|int and (item.price_to_earnings < [item.price_to_earnings_8,item.price_to_earnings_5,item.price_to_earnings_3]|min) %}
+		<td align="center" style="background-color:yellow">{{item.price_to_earnings}}   ({{item.price_to_earnings_8}}, {{item.price_to_earnings_5}}, {{item.price_to_earnings_3}})</td>
+	{% else %}
+		<td align="center">{{item.price_to_earnings}}   ({{item.price_to_earnings_8}}, {{item.price_to_earnings_5}}, {{item.price_to_earnings_3}})</td>
+	{% endif %}
 	<td align="center">{{item.qtr_sales_growth}}</td>
 	<td align="center">{{item.qtr_profit_growth}}</td>
-	<td align="center">{{item.from_year_high}}</td>
-	<td align="center">{{item.from_year_low}}</td>
+	{% if item.from_year_high == '52w HIGH' %}
+		<td align="center" style="background-color:green">{{item.from_year_high}}</td>
+	{% else %}
+		<td align="center">{{item.from_year_high}}</td>
+	{% endif %}
+	{% if item.from_year_low == '52w LOW' %}
+		<td align="center" style="background-color:red">{{item.from_year_low}}</td>
+	{% else %}
+		<td align="center">{{item.from_year_low}}</td>
+	{% endif %}
         </tr>
     </tbody>
 {% endfor %}

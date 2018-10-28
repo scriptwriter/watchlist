@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 
+#configs = ['fastfood.json']
 configs = [
           'consumer_durables.json',
           'fmcg.json',
@@ -81,7 +82,7 @@ for config in configs:
     industry = []
     for scrip, url in url_mappings.items():
         count+=1
-        print(scrip)
+        #print(scrip)
         resp = requests.get(url)
         soup = BeautifulSoup(resp.text, 'lxml')
 
