@@ -18,6 +18,7 @@ configs = [
           'auto_ancilary.json',
           'tyres.json',
           'building_materials.json',
+          'roofing.json',
           'utilities.json',
           'chemicals.json',
           'midcaps.json',

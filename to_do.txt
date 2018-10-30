@@ -1,0 +1,3 @@
+1. convert qtr numbers to round ints
+2. column for roe,roce,roa, p/s for last 3 years.
+3. cash to market cap ratio
