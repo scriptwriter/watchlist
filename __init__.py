@@ -73,7 +73,8 @@ def extract_qtr_numbers(soup, result_type='tblQtyCons'):
         # else the main function returns twice - onec from inside and then outside
         return extract_qtr_numbers(soup, 'tblQtyStd')
 
-    return tuple(qtr_sales_growth), tuple(qtr_profit_growth)
+    # convert float string numbers to ints
+    return [int(float(x.replace("%", ""))) if x != '-' else x for x in qtr_sales_growth], [int(float(x.replace("%", ""))) if x != '-' else x for x in qtr_profit_growth]
 
 #*************************  MAIN  ************************  #
 
